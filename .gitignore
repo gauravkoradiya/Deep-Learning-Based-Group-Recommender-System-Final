@@ -93,3 +93,8 @@ target/
 
 # Virtual Environment
 .venv
+
+# ignore mlflow
+mlruns/
+mlartifacats/*
+saves/*
