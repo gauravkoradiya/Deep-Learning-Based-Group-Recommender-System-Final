@@ -18,9 +18,12 @@ for i in range(len(df['timestamp'])):
 df_20k = df[1:20001]
 # store in csv
 df_20k.to_csv('market_preprocessing_20k.csv')
-df_20k['user_id'].to_csv('item_data.csv', index=False, header=True)
-df_20k['user_id'].to_csv('users_data.csv', index=False, header=True)
-
+user_list=df_20k['user_id'].unique()
+item_list=df_20k['item_id'].unique()
+df_user_id = pd.DataFrame(user_list,columns =['user_id'])
+df_item_id = pd.DataFrame(item_list,columns =['item_id'])
+df_item_id.to_csv('item_data.csv', index=False, header=True)
+df_user_id.to_csv('users_data.csv', index=False, header=True)
 # store in .dat
 output_file = 'market_preprocessing_20k.dat'
 
