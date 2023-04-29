@@ -35,11 +35,11 @@ class DQNAgent(object):
                                          item_num=config.item_num).to(config.device)
         self.qnet = model.QNetwork(embedded_state_size=config.embedded_state_size,
                                  action_weight_size=config.embedded_action_size,
-                                 hidden_sizes=config.actor_hidden_sizes).to(config.device)
+                                 hidden_sizes=config.qnet_hidden_sizes).to(config.device)
        
         self.tnet = model.TargetNetwork(embedded_state_size=config.embedded_state_size,
                                    embedded_action_size=config.embedded_action_size,
-                                   hidden_sizes=config.critic_hidden_sizes).to(config.device)
+                                   hidden_sizes=config.tnet_hidden_sizes).to(config.device)
 
         self.replay_memory = utils.ReplayMemory(buffer_size=config.buffer_size)
 
