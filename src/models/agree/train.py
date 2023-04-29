@@ -115,7 +115,7 @@ class Trainer():
             print('Group Iteration %d [%.1f s]: HR = %.4f, NDCG = %.4f, [%.1f s]' % (epoch, time.time() - t1, g_hr, g_ndcg, time.time() - t2))
 
             self.history[epoch] = {"User_Average_Loss" : avg_user_loss.item(), "Group_Average_Loss": avg_group_loss.item(), "User_HR": u_hr.item(), "User_NDCG": u_ndcg.item(), "Group_HR": g_hr.item(), "Group_NDCG": g_ndcg.item()}
-        self.save_agent()
+        #self.save_agent()
         return self.history
 
     def evaluation(self, testRatings, testNegatives, K, type_m):
