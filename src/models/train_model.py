@@ -29,14 +29,16 @@ mlflow.set_tracking_uri("http://127.0.0.1:5000")
 
 @click.command()
 @click.option('--algorithm', type = str, default = 'DRGR', show_default = True, help ='Algorithm to be used for training. Possible values are ["DRGR","AGREE"]')
-def main(algorithm):
+@click.option('--dataset', type = str, default = 'Book_Review', show_default = True, help ='Dataset to be used for training. Possible values are ["Book_Review, "Market_Bias"]')
+def main(algorithm, dataset):
     with mlflow.start_run(experiment_id=0):
         try:
             if algorithm == 'DRGR':
-                config = DRGR_Config()
+                config = DRGR_Config(data_set=dataset)
+                # config.data_folder_path = os.path.join(config.data_folder_path, dataset)
                 dataloader = DataLoader(config)
                 # mlflow.log_param("config", config)
-                mlflow.log_params({"Dataset": "Book Review", "Algorithm" : "DRGR", "Model": "DDPG" , "Operation": "Training"})
+                mlflow.log_params({"Dataset": dataset , "Algorithm" : "DRGR", "Model": "DDPG" , "Operation": "Training"})
                 rating_matrix_train = dataloader.load_rating_matrix(dataset_name='train')
                 df_eval_user_test = dataloader.load_eval_data(mode='user', dataset_name='test')
                 df_eval_group_test = dataloader.load_eval_data(mode='group', dataset_name='test')
@@ -51,7 +53,6 @@ def main(algorithm):
 
                 # Log the model with MLflow
                 # Log the model file as an artifact
-                # mlflow.log_artifact("path/to/model.pth", artifact_path="models")
                 mlflow.pytorch.log_model(pytorch_model=trainer.agent, artifact_path="model")
 
                 # Register the model
@@ -59,10 +60,11 @@ def main(algorithm):
                 registered_model = mlflow.register_model(model_uri=model_uri, name="DRGR")
             
             elif algorithm == 'AGREE':
-                mlflow.log_params({"Dataset": "Book Review", "Algorithm" : "AGREE", "Model": "DDPG" , "Operation": "Training"})
+                mlflow.log_params({"Dataset": dataset, "Algorithm" : "AGREE", "Model": "DDPG" , "Operation": "Training"})
 
                  # initial parameter class
-                config = AGREE_Config()
+                config = AGREE_Config(data_set=dataset)
+                # config.data_folder_path = os.path.join(config.data_folder_path, dataset)
              
                 # initial trainer
                 trainer = AGREE_Trainer(config=config)
@@ -87,7 +89,7 @@ def main(algorithm):
         except Exception as e:
             # log the stack trace as a parameter
             logger.error("Failed to run script", exc_info=True)
-            mlflow.set_tag("Error", "stack_trace : " + str(traceback.format_exc()))
+            mlflow.log_text(str(traceback.format_exc()), 'Error.txt')
             # end the run with an error status
             mlflow.end_run(status="FAILED")
 

@@ -8,12 +8,13 @@ class DRGR_Config(object):
     """
     Configurations
     """
-    def __init__(self):
+    def __init__(self,data_set):
         # Data
-        self.data_folder_path = os.path.join('data','processed','BookReview')
-        self.item_path = os.path.join(self.data_folder_path, 'books_data.csv')
-        self.user_path = os.path.join(self.data_folder_path, 'users_data.csv')
-        self.group_path = os.path.join(self.data_folder_path, 'groupMember.dat')
+        self.data_set = data_set
+        self.data_folder_path = os.path.join('data','processed',self.data_set)
+        self.item_path = os.path.join(self.data_folder_path,'item_data.csv')
+        self.user_path = os.path.join(self.data_folder_path,'users_data.csv')
+        self.group_path = os.path.join(self.data_folder_path,'groupMember.dat')
         self.saves_folder_path = os.path.join('saves')
         self.save_model_path= os.path.join('models','DRGR')
         
@@ -52,7 +53,7 @@ class DRGR_Config(object):
         # Optimizer
         self.batch_size = 64
         self.buffer_size = 100000
-        self.num_episodes = 20
+        self.num_episodes = 2
         self.num_steps = 200
         self.embedding_weight_decay = 1e-4
         self.actor_weight_decay = 1e-4
@@ -74,11 +75,11 @@ class DRGR_Config(object):
         else:
             self.device = torch.device("cpu")
 
-
 class AGREE_Config(object):
-    def __init__(self):
-        self.path = os.path.join('data','processed','BookReview')
-        self.user_dataset = os.path.join(self.path, 'userRating')
+    def __init__(self,data_set):
+        self.data_set = data_set
+        self.path = os.path.join('data','processed',self.data_set)
+        self.user_dataset = os.path.join(self.path,'userRating')
         self.group_dataset = os.path.join(self.path, 'groupRating')
         self.user_in_group_path = os.path.join(self.path, 'groupMember.dat')
         self.embedding_size = 32

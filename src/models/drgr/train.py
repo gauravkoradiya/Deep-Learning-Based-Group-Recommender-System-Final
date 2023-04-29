@@ -77,7 +77,7 @@ class Trainer():
 
             logger.info('Training finished')
             logger.info('Saving model')
-            self.save_agent()
+            #self.save_agent()
             return self.history
         except:
             logger.error('Training failed')
