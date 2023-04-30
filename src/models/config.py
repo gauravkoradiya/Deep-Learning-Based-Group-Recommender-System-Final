@@ -53,7 +53,7 @@ class DRGR_Config(object):
         # Optimizer
         self.batch_size = 64
         self.buffer_size = 100000
-        self.num_episodes = 2
+        self.num_episodes = 200
         self.num_steps = 200
         self.embedding_weight_decay = 1e-4
         self.actor_weight_decay = 1e-4
@@ -83,7 +83,7 @@ class AGREE_Config(object):
         self.group_dataset = os.path.join(self.path, 'groupRating')
         self.user_in_group_path = os.path.join(self.path, 'groupMember.dat')
         self.embedding_size = 32
-        self.epoch = 1
+        self.epoch = 15
         self.num_negatives = 6
         self.batch_size = 256
         self.lr = [0.000005, 0.000001, 0.0000005]

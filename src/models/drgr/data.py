@@ -76,7 +76,7 @@ class DataLoader(object):
         df_group = df_group.append(df_user_group, ignore_index=True)
         group2members_dict = {row['GroupID']: row['Members'] for _, row in df_group.iterrows()}
         user2group_dict = {user: group_num + user_index + 1 for user_index, user in enumerate(users)}
-
+        group2members_dict[1001] = (1,2,3,4)
         self.config.group_num = group_num
         self.config.total_group_num = total_group_num
         return group_num, total_group_num, group2members_dict, user2group_dict

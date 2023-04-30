@@ -65,14 +65,14 @@ class Trainer():
                 print('Episode = %d, average reward = %.4f' % (episode, reward_per_episode))
                 if (episode + 1) % self.config.eval_per_iter == 0:
                     hist['reward'] = reward_per_episode
-                    for top_K in self.config.top_K_list:
-                        avg_user_recall, avg_user_ndcg = self.evaluator.evaluate(agent=self.agent, df_eval=self.df_eval_user, mode='user', top_K=top_K)
-                        hist[f'user_recall@{top_K}'] = avg_user_recall
-                        hist[f'user_ndcg@{top_K}'] = avg_user_ndcg
-                    for top_K in self.config.top_K_list:
-                        avg_group_recall, avg_group_ndcg = self.evaluator.evaluate(agent=self.agent, df_eval=self.df_eval_group, mode='group', top_K=top_K)
-                        hist[f'group_recall@{top_K}'] = avg_group_recall
-                        hist[f'group_ndcg@{top_K}'] = avg_group_ndcg
+                    # for top_K in self.config.top_K_list:
+                    #     avg_user_recall, avg_user_ndcg = self.evaluator.evaluate(agent=self.agent, df_eval=self.df_eval_user, mode='user', top_K=top_K)
+                    #     hist[f'user_recall@{top_K}'] = avg_user_recall
+                    #     hist[f'user_ndcg@{top_K}'] = avg_user_ndcg
+                    # for top_K in self.config.top_K_list:
+                    #     avg_group_recall, avg_group_ndcg = self.evaluator.evaluate(agent=self.agent, df_eval=self.df_eval_group, mode='group', top_K=top_K)
+                    #     hist[f'group_recall@{top_K}'] = avg_group_recall
+                    #     hist[f'group_ndcg@{top_K}'] = avg_group_ndcg
                     self.history[episode] = hist
 
             logger.info('Training finished')
